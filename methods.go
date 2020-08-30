@@ -2,7 +2,6 @@ package go_here
 
 import (
 	"bytes"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -96,12 +95,7 @@ func (api HereAPI) ReverseGeocode(position Position) ([]Item, error) {
 }
 
 func (api HereAPI) request(url string) ([]byte, int, error) {
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
-	}
-	client := &http.Client{Transport: tr}
-
-	resp, err := client.Get(url)
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, 500, err
 	}
