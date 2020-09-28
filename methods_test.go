@@ -14,14 +14,16 @@ func getAPI() HereAPI {
 func TestHereAPI_Discover(t *testing.T) {
 	api := getAPI()
 
-	items, err := api.Discover(Position{Lat: 42.36346, Lng: -71.05444}, 1, "restaurant", "countryCode:USA")
+	items, err := api.Discover(Position{Lat: 55.829169, Lng: 37.493320}, 10, "restaurant", "countryCode:USA")
 	if err != nil {
 		t.Log(err)
 		t.FailNow()
 		return
 	}
 
-	log.Println(items[0].Title)
+	for _, item := range items {
+		log.Println(item.Title)
+	}
 }
 
 func TestHereAPI_Geocode(t *testing.T) {
@@ -40,27 +42,31 @@ func TestHereAPI_Geocode(t *testing.T) {
 func TestHereAPI_Autosuggest(t *testing.T) {
 	api := getAPI()
 
-	items, err := api.Autosuggest(Position{Lat: 52.93175,Lng: 12.77165}, 5, "res")
+	items, err := api.Autosuggest(Position{55.665781, 37.496703}, 20, "адм")
 	if err != nil {
 		t.Log(err)
 		t.FailNow()
 		return
 	}
 
-	log.Println(items[0].Title)
+	for _, item := range items {
+		log.Println(item.Title, item.Address.Label, item.Position)
+	}
 }
 
 func TestHereAPI_Browse(t *testing.T) {
 	api := getAPI()
 
-	items, err := api.Browse(Position{-23.000813,-43.351629}, 2, []string{"100-1100", "200-2000-0011", "100-1000"})
+	items, err := api.Browse(Position{55.665781, 37.496703}, 10)
 	if err != nil {
 		t.Log(err)
 		t.FailNow()
 		return
 	}
 
-	log.Println(items[0].Title)
+	for _, item := range items {
+		log.Println(item.Title)
+	}
 }
 
 func TestHereAPI_Lookup(t *testing.T) {

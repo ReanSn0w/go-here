@@ -68,11 +68,10 @@ func (api HereAPI) Autosuggest(position Position, limit int, query string) ([]It
 //
 // По локации пользователя будут подобраны места удовлетворяющие выбранным категориям
 // Места будут отсортированы в порядке удаления от пользователя
-func (api HereAPI) Browse(position Position, limit int, categories []string) ([]Item, error) {
+func (api HereAPI) Browse(position Position, limit int) ([]Item, error) {
 	return api.getItems("https://browse.search.hereapi.com/v1/browse", func(v url.Values) {
 		v.Add("at", fmt.Sprintf("%v,%v", position.Lat, position.Lng))
 		v.Add("limit", fmt.Sprintf("%v", limit))
-		v.Add("categories", api.category(categories))
 	})
 }
 
